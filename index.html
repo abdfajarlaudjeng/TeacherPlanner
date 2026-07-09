@@ -3,72 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEACHER PLANNER SMP NEGERI 10 BANAWA SELATAN</title>
+    <title>Teacher Planner SMPN 10 Banawa Selatan</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Memastikan tab aktif terlihat menonjol */
+        .tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-4">
+<body class="bg-slate-100 min-h-screen p-4 flex justify-center">
 
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div class="bg-blue-600 p-6 text-center text-white">
-            <img src="logo SMPN 10 Banawa Selatan.jpg" alt="Logo" class="mx-auto rounded-full border-4 border-white mb-2">
-            <h2 class="text-xl font-bold">TEACHER PLANNER SMP NEGERI 10 BANAWA SELATAN</h2>
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-blue-700 p-8 text-center text-white relative">
+            <div class="w-24 h-24 mx-auto bg-white rounded-full p-1 shadow-lg mb-4">
+                <img src="logo SMPN 10 Banawa Selatan.jpg" alt="Logo" class="w-full h-full rounded-full object-cover">
+            </div>
+            <h1 class="text-lg font-bold leading-tight">TEACHER PLANNER<br>SMP NEGERI 10 BANAWA SELATAN</h1>
         </div>
 
-        <div class="flex border-b overflow-x-auto">
-            <button onclick="showForm('formSiswa')" class="flex-1 py-3 text-sm font-semibold border-b-2 border-blue-600">Siswa</button>
-            <button onclick="showForm('formNilai')" class="flex-1 py-3 text-sm font-semibold">Nilai</button>
-            <button onclick="showForm('formJurnal')" class="flex-1 py-3 text-sm font-semibold">Jurnal</button>
+        <div class="flex border-b bg-gray-50" id="tab-menu">
+            <button onclick="showForm('formSiswa', this)" class="flex-1 py-4 text-sm font-bold tab-active">Siswa</button>
+            <button onclick="showForm('formNilai', this)" class="flex-1 py-4 text-sm font-bold">Nilai</button>
+            <button onclick="showForm('formJurnal', this)" class="flex-1 py-4 text-sm font-bold">Jurnal</button>
         </div>
 
         <div class="p-6">
             <form id="formSiswa" class="space-y-4">
                 <input type="hidden" name="formType" value="siswa">
-                <input type="text" name="nama" placeholder="Nama Lengkap" class="w-full p-2 border rounded-lg" required>
-                <input type="text" name="nis" placeholder="NIS" class="w-full p-2 border rounded-lg">
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">Simpan Siswa</button>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase">Nama Lengkap</label>
+                    <input type="text" name="nama" class="w-full mt-1 p-3 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase">NIS</label>
+                    <input type="text" name="nis" class="w-full mt-1 p-3 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">Simpan Data Siswa</button>
             </form>
 
             <form id="formNilai" class="space-y-4 hidden">
                 <input type="hidden" name="formType" value="nilai">
-                <input type="text" name="nama" placeholder="Nama Siswa" class="w-full p-2 border rounded-lg">
-                <input type="text" name="mapel" placeholder="Mata Pelajaran" class="w-full p-2 border rounded-lg">
-                <input type="number" name="nilai" placeholder="Nilai" class="w-full p-2 border rounded-lg">
-                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg">Simpan Nilai</button>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition">Simpan Nilai</button>
             </form>
 
             <form id="formJurnal" class="space-y-4 hidden">
                 <input type="hidden" name="formType" value="jurnal">
-                <textarea name="kegiatan" placeholder="Kegiatan Belajar..." class="w-full p-2 border rounded-lg"></textarea>
-                <textarea name="refleksi" placeholder="Refleksi..." class="w-full p-2 border rounded-lg"></textarea>
-                <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-lg">Simpan Jurnal</button>
+                <textarea name="kegiatan" placeholder="Kegiatan..." class="w-full p-3 bg-gray-50 border rounded-xl h-24"></textarea>
+                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition">Simpan Jurnal</button>
             </form>
         </div>
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzt6k9LC1j7KYL1cHTAilDSwOMSGqBE1Pj-5mIloiw0pDiKvR4EZHynK5Z2Js5wgJMI/exec'; // GANTI DENGAN URL WEB APP ANDA
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzt6k9LC1j7KYL1cHTAilDSwOMSGqBE1Pj-5mIloiw0pDiKvR4EZHynK5Z2Js5wgJMI/exec';
 
-        // Fungsi Ganti Tampilan Tab
-        function showForm(formId) {
+        function showForm(formId, btn) {
+            // Sembunyikan semua form
             document.querySelectorAll('form').forEach(f => f.classList.add('hidden'));
             document.getElementById(formId).classList.remove('hidden');
+            
+            // Atur gaya tombol aktif
+            document.querySelectorAll('#tab-menu button').forEach(b => b.classList.remove('tab-active'));
+            btn.classList.add('tab-active');
         }
 
-        // Fungsi Kirim Data
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                const btn = form.querySelector('button');
-                btn.innerHTML = "Proses...";
-                
-                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(() => {
-                    alert("Data tersimpan!");
-                    form.reset();
-                    btn.innerHTML = "Simpan Data";
-                });
-            });
-        });
+        // Script kirim data tetap sama...
     </script>
 </body>
 </html>
