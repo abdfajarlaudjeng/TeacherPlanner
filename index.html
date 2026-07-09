@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEACHER PLANNER SMP NEGERI 10 BANAWA SELATAN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-blue-600 p-6 text-center text-white">
+            <img src="logo SMPN 10 Banawa Selatan.jpg" alt="Logo" class="mx-auto rounded-full border-4 border-white mb-2">
+            <h2 class="text-xl font-bold">TEACHER PLANNER SMP NEGERI 10 BANAWA SELATAN</h2>
+        </div>
+
+        <div class="flex border-b overflow-x-auto">
+            <button onclick="showForm('formSiswa')" class="flex-1 py-3 text-sm font-semibold border-b-2 border-blue-600">Siswa</button>
+            <button onclick="showForm('formNilai')" class="flex-1 py-3 text-sm font-semibold">Nilai</button>
+            <button onclick="showForm('formJurnal')" class="flex-1 py-3 text-sm font-semibold">Jurnal</button>
+        </div>
+
+        <div class="p-6">
+            <form id="formSiswa" class="space-y-4">
+                <input type="hidden" name="formType" value="siswa">
+                <input type="text" name="nama" placeholder="Nama Lengkap" class="w-full p-2 border rounded-lg" required>
+                <input type="text" name="nis" placeholder="NIS" class="w-full p-2 border rounded-lg">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg">Simpan Siswa</button>
+            </form>
+
+            <form id="formNilai" class="space-y-4 hidden">
+                <input type="hidden" name="formType" value="nilai">
+                <input type="text" name="nama" placeholder="Nama Siswa" class="w-full p-2 border rounded-lg">
+                <input type="text" name="mapel" placeholder="Mata Pelajaran" class="w-full p-2 border rounded-lg">
+                <input type="number" name="nilai" placeholder="Nilai" class="w-full p-2 border rounded-lg">
+                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg">Simpan Nilai</button>
+            </form>
+
+            <form id="formJurnal" class="space-y-4 hidden">
+                <input type="hidden" name="formType" value="jurnal">
+                <textarea name="kegiatan" placeholder="Kegiatan Belajar..." class="w-full p-2 border rounded-lg"></textarea>
+                <textarea name="refleksi" placeholder="Refleksi..." class="w-full p-2 border rounded-lg"></textarea>
+                <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-lg">Simpan Jurnal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzt6k9LC1j7KYL1cHTAilDSwOMSGqBE1Pj-5mIloiw0pDiKvR4EZHynK5Z2Js5wgJMI/exec'; // GANTI DENGAN URL WEB APP ANDA
+
+        // Fungsi Ganti Tampilan Tab
+        function showForm(formId) {
+            document.querySelectorAll('form').forEach(f => f.classList.add('hidden'));
+            document.getElementById(formId).classList.remove('hidden');
+        }
+
+        // Fungsi Kirim Data
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.innerHTML = "Proses...";
+                
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(() => {
+                    alert("Data tersimpan!");
+                    form.reset();
+                    btn.innerHTML = "Simpan Data";
+                });
+            });
+        });
+    </script>
+</body>
+</html>
